@@ -1,0 +1,68 @@
+#pragma platform(VEX)
+
+//Competition Control and Duration Settings
+#pragma competitionControl(Competition)
+#pragma autonomousDuration(20)
+#pragma userControlDuration(120)
+
+#include "Vex_Competition_Includes.c"   //Main competition background code...do not modify!
+
+
+void pre_auton() {
+
+}
+
+task autonomous()
+{
+	driveDistance(60,1500,STRAIGHT)
+	driveDistance(150,340,STRAIGHT);
+	wait1Msec(500);
+	driveDistance(-150,500,STRAIGHT);
+	driveDistance(127,170,STRAIGHT);
+	driveDistance(-127,170,STRAIGHT);
+	wait1Msec(500);
+	driveDistance(150,1600,STRAIGHT);
+	
+	// To get the robot to go straight: while(averageEncoderCounts < counts you want to go){drive;}
+	
+	while(encoderCounts > abs(nMotorEncoder[lDriveFront] + nMotorEncoder[rDriveFront])/2) { 		//adjust the powers sent to each side if the encoder values don't match
+
+  wait1Msec(2000);						  // Robot waits for 2000 milliseconds before executing program
+
+	                              // Move forward at half power for 1.5 seconds
+	motor[rightMotor] = -63;      // Motor on port2 is run at half (63) power forward
+	motor[leftMotor]  = -63;      // Motor on port3 is run at half (63) power forward
+	wait1Msec(1500);				      // Robot runs previous code for 1500 milliseconds before moving on
+
+	                              // Brake for 1 second
+	motor[rightMotor] = 95.25     // Motor on port2 is run at 95.25 (a 1/4 of full power) power forward
+	motor[leftMotor]  = 95.25;		// Motor on port3 is run at 95.25 (a 1/4 of full power) power reverse
+	wait1Msec(1000);				      // Robot runs previous code for 1000 milliseconds before moving on
+
+	                              // Move reverse at half power for 1.5 seconds
+	motor[rightMotor] = -63;			// Motor on port2 is run at half (63) power forward
+	motor[leftMotor]  = -63;			// Motor on port3 is run at half (63) power reverse
+	wait1Msec(1000)		            // Robot runs previous code for 1500 milliseconds before moving on
+
+	// Turn left at full power for 0.75 seconds
+	motor[rightMotor] = 127;			// Motor on port2 is run at full (127) power forward
+	motor[leftMotor]  = -127;		  // Motor on port3 is run at full (-127) power reverse
+	wait1Msec(750);					      // Robot runs previous code for 750 milliseconds before moving on
+}					
+
+
+
+motor																	// moves backward 7 in
+																			// arm moves up 1/4 of a second down 1/4 of a second
+																			// drive forward for 48 inches
+																			// lift arm power 80 (1000)
+																			// back up 40 in
+																			// turn 90 degrees clockwise (arm over field)
+																			// back up 46 inches
+																			// life it all the way up
+	
+}
+
+task usercontrol() {
+
+}
